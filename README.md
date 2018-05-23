@@ -2,4 +2,8 @@
 
 Data Analysis using data from the YouTube API
 
-Authors: Jenni Lane, Omar Ibrahim, Manu Sharma, Sabrina Mohamed
+Authors:
+* Jenni Lane
+* Omar Ibrahim
+* Manu Sharma
+* Sabrina Mohamed
