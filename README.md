@@ -1,2 +1,3 @@
-# info201-group-project
-Info 201 Section AC Team Red
+# Info 201 Section AC Team Red
+
+Data Analysis using data from the YouTube API
