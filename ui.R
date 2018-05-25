@@ -1,5 +1,7 @@
 library(shiny)
 
-ui <- fluidPage()
+ui <- fluidPage(
+  
+)
 
 shinyUI(ui)
