@@ -1,7 +1,14 @@
 library(shiny)
 
-ui <- fluidPage(
-  
+ui <- navbarPage("Pages",
+  tabPanel("Omar",
+           sidebarLayout(
+             sidebarPanel(),
+             mainPanel()
+           )),
+  tabPanel("Jenni"),
+  tabPanel("Sabrina"),
+  tabPanel("Manu")
 )
 
 shinyUI(ui)
