@@ -29,8 +29,9 @@ national_arson_data <- function() {
 ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
-      selectInput("state", "State: ", choices = append(state.name, "National", 26), 
-                  selected = "National"),
+      selectInput("state", "State: ", choices = #append(state.name, "National", 26), 
+                    state.name,
+                  selected = "Washington"),
       
       br(),
       
@@ -46,53 +47,36 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      plotOutput("plot")
+      plotOutput("plot"),
+      textOutput("test")
     )
   )
 )
 
 server <- function(input, output) {
+  output$test <- renderText({
+      paste("The confirmed value is true", input$choices)
+  })
+  
   output$plot <- renderPlot({
-    arson_data <- ""
-    if (input$state == "National") {
-      arson_data <- national_arson_data()
-      
-      plot <- ggplot(data = arson_data)
-      
-      if (input$reported) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = reported), color = "blue")
-      }
-      
-      if (input$confirmed) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "red")
-      }
-      
-      if (input$damage) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = est_damage_value))
-      }
-      
-      plot
-    } else {
-      state <- state.abb[grep(input$state, state.name)]
-      arson_data <- state_arson_data(state)
-      
-      plot <- ggplot(data = arson_data)
-      
-      if (input$reported) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = reported), color = "blue")
-      }
-      
-      if (input$confirmed) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "red")
-      }
-      
-      if (input$damage) {
-        plot <- plot + geom_line(mapping = aes(x = year, y = est_damage_value))
-      }
-      
-      plot
+    state <- state.abb[grep(input$state, state.name)]
+    arson_data <- state_arson_data(state)
+    
+    plot <- ggplot(data = arson_data)# + geom_line(mapping = aes(x = year, y = actual), color = "red")
+    
+    if ("reported" %in% input$choices) {
+      plot <- plot + geom_line(mapping = aes(x = year, y = reported), color = "blue")
     }
     
+    if ("confirmed" %in% input$choices) {
+      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "red")
+    }
+    
+    if ("damage" %in% input$choices) {
+      plot <- plot + geom_line(mapping = aes(x = year, y = est_damage_value))
+    }
+    
+    plot
   })
 }
 
