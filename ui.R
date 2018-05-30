@@ -4,32 +4,34 @@ source("national_crime_trends.R")
 
 ui <- navbarPage("Pages",
   tabPanel("Omar",
-           titlePanel("National Arson Data"),
+           tags$h1("National Arson Data"),
            sidebarLayout(
-             sidebarPanel(
-               selectInput("state", "State: ", choices = states,
+            sidebarPanel(
+              selectInput("state", "State: ", choices = states,
                            selected = "Washington"),
                
-               br(),
+              br(),
                
-               checkboxGroupInput("choices", "Plot: ", 
+              checkboxGroupInput("choices", "Plot: ", 
                                   c("Reported Cases" = "reported", 
                                     "Confirmed Cases" = "confirmed"),
                                   selected = "confirmed"),
                
-               br(),
+              br(),
                
-               sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016),
+              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016),
+              
+              tags$hr(),
                
-               textOutput("va_note", )
-             ),
+              tags$blockquote("Note: Virginia has been removed as there is not adequet data on VA 
+                              to create a visualization.")
+            ),
              
-             mainPanel(
-               fluidRow(
-                 column(6, plotOutput("cases_plot", click = "plot_click")),
-                 column(6, plotOutput("damage_plot")))
-             )
-           )),
+            mainPanel(
+              tabsetPanel(type = "tabs",
+                          tabPanel("Arson Cases", plotOutput("cases_plot", click = "plot_click")),
+                          tabPanel("Damages", plotOutput("damage_plot")))
+           ))),
   tabPanel("Jenni"),
   tabPanel("Sabrina"),
   tabPanel("Manu")
