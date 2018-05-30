@@ -4,7 +4,8 @@ source("analysis.R")
 source("national_crime_trends.R")
 
 ui <- navbarPage("Pages",
-  tabPanel("Omar",
+  tabPanel("Home"),
+  tabPanel("Arson",
            tags$h1("National Arson Data"),
            sidebarLayout(
             sidebarPanel(
@@ -30,7 +31,7 @@ ui <- navbarPage("Pages",
              
             mainPanel(
               tabsetPanel(type = "tabs",
-                          tabPanel("Arson Cases", plotOutput("cases_plot", click = "plot_click")),
+                          tabPanel("Arson Cases", plotlyOutput("cases_plot")),
                           tabPanel("Damages", plotOutput("damage_plot")))
            ))),
   tabPanel("Jeni",
