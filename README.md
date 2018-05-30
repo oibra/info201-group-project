@@ -3,7 +3,8 @@
 Data Analysis using data from the ~YouTube~ FBI Crime Data API
 
 Authors:
-* Jenni Lane
+
+* Jeni Lane
 * Omar Ibrahim
 * Manu Sharma
 * Sabrina Mohamed
