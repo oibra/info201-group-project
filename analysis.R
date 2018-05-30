@@ -77,7 +77,7 @@ wash_percentage <- round(as.numeric(wa_property) / wa_total_crime * 100, 0)
 
 cali_wash_range <- wash_percentage - cal_percentage
 
-cali_vermont_range <- ver_percentage - cal_percentage
+cali_vermont_range <- vermont_percentage - cal_percentage
 
 #Mean percentage of property crime
 
