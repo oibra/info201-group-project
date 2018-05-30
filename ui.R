@@ -3,7 +3,7 @@ library(shiny)
 source("analysis.R")
 source("national_crime_trends.R")
 
-ui <- navbarPage("Pages",
+ui <- navbarPage("Info 201 AC Team Red",
   tabPanel("Home"),
   tabPanel("Arson",
            tags$h1("National Arson Data"),
@@ -21,7 +21,7 @@ ui <- navbarPage("Pages",
                
               br(),
                
-              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016),
+              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016, sep = ""),
               
               tags$hr(),
                
@@ -31,7 +31,7 @@ ui <- navbarPage("Pages",
              
             mainPanel(
               tabsetPanel(type = "tabs",
-                          tabPanel("Arson Cases", plotlyOutput("cases_plot")),
+                          tabPanel("Arson Cases", plotOutput("cases_plot")),
                           tabPanel("Damages", plotOutput("damage_plot")))
            ))),
   tabPanel("Jeni",
