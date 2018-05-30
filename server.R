@@ -38,6 +38,7 @@ server <- function(input, output) {
   output$prop_plot <- renderPlot({
     plot
   })
+
 }
 
 shinyServer(server)

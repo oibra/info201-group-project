@@ -8,6 +8,7 @@ ui <- navbarPage("Pages",
              sidebarPanel(),
              mainPanel()
            )),
+
   tabPanel("Jeni",
            sidebarLayout(
              
