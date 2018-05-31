@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|IBM+Plex+Sans|Josefin+Sans|PT+Sans|Sunflower:300|Ubuntu');
+
+nav > .container-fluid {
+  background-color: black;
+}
+
+nav {
+  margin-bottom: 0px;
+}
+
+body {
+  background-color: rgba(110, 21, 30, 0.75)
+}
+
+.navbar-brand, h1, h2, .navbar-header a, .navbar-header a:hover, .nav-tabs a {
+  font-family: 'Fjalla One';
+  color: #999;
+  text-decoration: none;
+}
+
+.navbar-brand {
+  font-size: 22px;
+}
+
+/*.shiny-plot-output {
+  padding: 10px;
+}*/

@@ -3,7 +3,8 @@ library(shiny)
 source("analysis.R")
 source("national_crime_trends.R")
 
-ui <- navbarPage("Info 201 AC Team Red",
+ui <- navbarPage(theme = "index.css",
+  "Info 201 AC Team Red",
   tabPanel("Home",
            h1("National Crime Data"),
            p("Include some descriptions here")
@@ -43,6 +44,7 @@ ui <- navbarPage("Info 201 AC Team Red",
                           )
            ))),
   tabPanel("Property Crime",
+           h2("Property Crime"),
            sidebarLayout(
              
              sidebarPanel(
