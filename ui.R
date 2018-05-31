@@ -3,7 +3,7 @@ library(shiny)
 source("analysis.R")
 source("national_crime_trends.R")
 
-ui <- navbarPage("Info 201 AC Team Red",
+ui <- navbarPage("Iinstallnfo 201 AC Team Red",
   tabPanel("Home"),
   tabPanel("Arson",
            tags$h1("National Arson Data"),
