@@ -20,7 +20,7 @@ server <- function(input, output) {
     }
 
     if ("confirmed" %in% input$choices) {
-      plot <- plot + geom_area(mapping = aes(x = year, y = actual), fill = "tomato")
+      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "tomato", size = 1.5)
     }
     
     plot +
@@ -34,7 +34,7 @@ server <- function(input, output) {
     arson_data <- state_arson_data(state, input$years[1], input$years[2])
     
     ggplot(data = arson_data) + 
-      geom_bar(mapping = aes(x = year, y = est_damage_value), stat = "identity", fill = "green") +
+      geom_bar(mapping = aes(x = year, y = est_damage_value), stat = "identity", fill = "#85bb65") +
       labs(title = "Est. Property Damage", x = "Year", y = "Damage Value ($)") +
       theme_minimal()
   })

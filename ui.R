@@ -3,10 +3,13 @@ library(shiny)
 source("analysis.R")
 source("national_crime_trends.R")
 
-ui <- navbarPage("Iinstallnfo 201 AC Team Red",
-  tabPanel("Home"),
+ui <- navbarPage("Info 201 AC Team Red",
+  tabPanel("Home",
+           h1("National Crime Data"),
+           p("Include some descriptions here")
+           ),
   tabPanel("Arson",
-           tags$h1("National Arson Data"),
+           h2("National Arson Data"),
            sidebarLayout(
             sidebarPanel(
               selectInput("state", "State: ", choices = states,
@@ -31,10 +34,15 @@ ui <- navbarPage("Iinstallnfo 201 AC Team Red",
              
             mainPanel(
               tabsetPanel(type = "tabs",
-                          tabPanel("Arson Cases", plotOutput("cases_plot")),
-                          tabPanel("Damages", plotOutput("damage_plot")))
+                          tabPanel("Arson Cases", 
+                                   plotOutput("cases_plot"),
+                                   p()),
+                          tabPanel("Damages", 
+                                   plotOutput("damage_plot"),
+                                   p())
+                          )
            ))),
-  tabPanel("Jeni",
+  tabPanel("Property Crime",
            sidebarLayout(
              
              sidebarPanel(
