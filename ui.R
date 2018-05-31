@@ -45,6 +45,7 @@ ui <- navbarPage(theme = "index.css",
                           )
            ))),
   tabPanel("Property Crime",
+           h2("Property Crime"),
            sidebarLayout(
              
              sidebarPanel(
