@@ -1,82 +1,17 @@
-<<<<<<< HEAD
-library("dplyr")
-library("ggplot2")
-library("maps")
-source(summarize.R)
-library("shiny")
-library("dplyr")
-
-
-my.server <- function(input, output) {
-  
-  data.table <- reactive({
-    data.type <-  switch (
-      input$data,
-      property_crime = "Property Crime",
-      violent_crime = "Violent Crime",
-      homicide = "Homicides",
-      rape_legacy = "Rape",
-      robbery = "Robberies",
-      aggravated_assault = "Aggravated Assaults",
-      burglary = "Burglaries",
-      larceny = "Larceny",
-      motor_vehicle_theft = "Motor Vehicle Thefts"
-    )
-    output$table.info <- renderText(paste("This table shows the", input$data, "data for the year", input$year, 
-                                          "with a minimum threshold of", input$obs, "for each arrest made that year."))
-    output$map.info <- renderText(paste("The map below is a chloropleth map showing the", input$data,
-                                        "comparing the arrest percentages in the year", input$year, "based on each crime that was committed.
-                                        This map only shows the arrests that are above this", input$obs, ".", "We can gather from this data that the amount
-                                        of crimes that are being committed and the amount of total arrests does not match up. Crimes are being reported but arrested
-                                        does not correlate"
-                                        ),
-    output$country.info = renderText({
-      xy_str <- function(e) {
-        if(is.null(e)) {
-          return("")
-        } else {
-          country <- GetCountryAtPoint(e$x, e$y)
-          country.data <- GetData(data.type, input$year, 0)
-          return(paste0(country, " ", input$data, " in the year ", input$year, ": ", country.data[country, 2]))
-        }
-      }
-      xy_str(input$plot_click)
-    }
-    return(GetData(data.type, input$year, input$obs))
-  })
-  
-  output$type <- renderText({
-    return(paste("Minimum threshold of", input$data))
-  })
-  
-  output$table <- renderTable({
-    data.table()
-  })
-  
-  output$plot <- renderPlot({
-    plot(GetPlot(data.table(), input$year, input$obs, input$data))
-  })
-  
-  
-}
-
-shinyServer(my.server)
-
-
-
-
-=======
 library(shiny)
 library(dplyr)
 library(plotly)
 library(ggplot2)
+library(maps)
 
+source("summarize.R")
 source("national_crime_trends.R")
 source("analysis.R")
 
 seattle_data <- read.csv("data/Seattle_Crime_Stats_by_Police_Precinct_2008-Present.csv")
 
 server <- function(input, output) {
+  #Omar
   output$cases_plot <- renderPlot({
     state <- state.abb[grep(input$state, state.name)]
     arson_data <- state_arson_data(state, input$years[1], input$years[2])
@@ -199,6 +134,7 @@ server <- function(input, output) {
           max_damage$est_damage_value, " in the year ", max_damage$year, ".")
   })
   
+  #Jeni
   output$state_name_t <- renderText({
     state_name
   })
@@ -309,6 +245,7 @@ server <- function(input, output) {
     plotly_plot <- hide_legend(ggplotly(plot2))
   })
 
+  #Manu
   filtered_plot <- reactive({
     data <- filter(seattle_data, Year == input$radio_seattle) %>% 
       group_by(CRIME_TYPE) %>% 
@@ -368,7 +305,60 @@ server <- function(input, output) {
     return(my_message)
   })
   
+  getType <- reactive({
+    data.type <-  switch (
+      input$data,
+      property_crime = "Property Crime",
+      violent_crime = "Violent Crime",
+      homicide = "Homicides",
+      rape_legacy = "Rape",
+      robbery = "Robberies",
+      aggravated_assault = "Aggravated Assaults",
+      burglary = "Burglaries",
+      larceny = "Larceny",
+      motor_vehicle_theft = "Motor Vehicle Thefts"
+    )
+  })
+
+  #Sabrina
+  output$table.info <- renderText({
+    paste("This table shows the", input$data, "data for the year", input$year,
+                                        "with a minimum threshold of", input$obs, "for each arrest made that year.")
+    })
+
+  output$map.info <- renderText({paste("The map below is a chloropleth map showing the", input$data,
+                                      "comparing the arrest percentages in the year", input$year, "based on each crime that was committed.
+                                      This map only shows the arrests that are above this", input$obs, ".", "We can gather from this data that the amount
+                                      of crimes that are being committed and the amount of total arrests does not match up. Crimes are being reported but arrested
+                                      does not correlate")
+  })
+
+  output$country.info = renderText({
+    xy_str <- function(e) {
+      if(is.null(e)) {
+        return("")
+      } else {
+        country <- GetCountryAtPoint(e$x, e$y)
+        country.data <- GetData(getType(), input$year, 0)
+        return(paste0(country, " ", input$data, " in the year ", input$year, ": ", country.data[country, 2]))
+      }
+    }
+    xy_str(input$plot_click)
+    GetData(getType(), input$year, input$obs)
+  })
+
+  output$type <- renderText({
+    paste("Minimum threshold of", input$data)
+  })
+
+  output$table <- renderTable({
+    data.table()
+  })
+
+  output$plot <- renderPlot({
+    plot(GetPlot(data.table(), input$year, input$obs, input$data))
+  })
+  
 }
 
 shinyServer(server)
->>>>>>> 271fdaa67a97a9d6166c4255c06df34f54688e32
