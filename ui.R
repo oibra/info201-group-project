@@ -44,7 +44,9 @@ ui <- navbarPage(theme = "index.css",
            
            h2("Sources:"),
            a(href = "https://crime-data-explorer.fr.cloud.gov/api#/", "FBI Crime Data API", 
-             class = "source")
+             class = "source"),
+           a(href = "https://data.seattle.gov/Public-Safety/Seattle-Crime-Stats-by-Police-Precinct-2008-Presen/3xqu-vnum",
+             "Seattle Crime Stats by Police Precinct 2008-Present", class = "source")
            ),
   tabPanel('Prominent Crimes',
            h2("Persistent Crimes in the US"),
@@ -235,7 +237,7 @@ ui <- navbarPage(theme = "index.css",
              class = "arson-description")
            ),
   
-  tabPanel("Sabrina"),
+  # tabPanel("Sabrina"),
   tabPanel("Seattle Crimes",
            h2("Seattle Based Crime Specifics"),
            h4("Page by Manu Sharma"),
