@@ -12,7 +12,7 @@ body {
   background-color: rgba(110, 21, 30, 0.75)
 }
 
-.navbar-brand, h1, h2, h4, .navbar-header a, .navbar-header a:hover, .nav-tabs a {
+.navbar-brand, h1, h2, h4, .navbar-header a, .navbar-header a:hover, .nav-tabs a, .source {
   font-family: 'Fjalla One';
   color: #aaa;
   text-decoration: none;
@@ -26,7 +26,7 @@ h4 {
   font-size: 14pt;
 }
 
-p {
+p, .source {
   color: #ddd;
   font-size: 12pt;
 }
@@ -51,4 +51,8 @@ strong {
 
 #arson-description {
   width: 90%;
+}
+
+#authors {
+  text-decoration: none;
 }
