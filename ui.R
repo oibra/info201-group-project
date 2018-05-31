@@ -12,7 +12,8 @@ ui <- navbarPage(theme = "index2.css",
                    "Info 201 AC Team Red"),
   tabPanel("Home",
            h1("National Crime Data"),
-           p("Include some descriptions here")
+           h4("Authors: Omar Ibrahim, Jenni Lane, Sabrina Mohamed, Manu Sharma"),
+           p()
            ),
   tabPanel("Arson",
            h2("National Arson Data"),
