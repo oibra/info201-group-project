@@ -16,16 +16,24 @@ ui <- navbarPage(theme = "index.css",
            ),
   tabPanel("Arson",
            h2("National Arson Data"),
+           h4("Page by Omar Ibrahim"),
            p("Arson is the criminal act of deliberately setting a fire, and",
              "is a large enough issue that the FBI keeps an entire publicly",
              "accessible database on it, which is what we used to provide",
              "this data. Our plots show data about reported number of cases", 
              "of arson, actual cases of arson, and total amount of property",
              "damage caused by arson from the years 1979 - 2016. The total",
-             "actual cases of arson peaked at",
+             "actual cases of arson nationally peaked at",
              strong(textOutput("peak_actual_cases", inline = T), inline = T),
              "cases in the year",
-             strong(textOutput("peak_year", inline = T), inline = T), id = "arson-description"),
+             strong(textOutput("peak_year", inline = T), inline = T), 
+             "while national property damage caused by arson peaked at ",
+             strong(textOutput("peak_damage", inline = T), inline = T),
+             "in the year",
+             strong(textOutput("peak_damage_year", inline = T), inline = T),
+             ".",
+             id = "arson-description"),
+            
            
            br(),
            
@@ -37,19 +45,21 @@ ui <- navbarPage(theme = "index.css",
                
               br(),
                
-              checkboxGroupInput("choices", "Plot: ", 
-                                  c("Reported Cases" = "reported", 
-                                    "Confirmed Cases" = "confirmed"),
-                                  selected = "confirmed"),
-               
-              br(),
-               
               sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016, sep = ""),
               
-              tags$hr(),
+              br(),
+              
+              checkboxGroupInput("choices", "Plot: ", 
+                                 c("Reported Cases" = "reported", 
+                                   "Confirmed Cases" = "confirmed"),
+                                 selected = "confirmed"),
+              
+              hr(),
                
-              tags$blockquote("Note: Virginia has been removed as there is not adequet data on VA 
-                              to create a visualization.")
+              p(em("Notes: ")),
+              p(em("Virginia has been removed as there is not adequet data on VA to create a",
+                   "visualization.")),
+              p(em("Plot selector is only for first graph."))
             ),
              
             mainPanel(
@@ -57,10 +67,13 @@ ui <- navbarPage(theme = "index.css",
               tabsetPanel(type = "tabs",
                           tabPanel("Arson Cases", 
                                    plotOutput("cases_plot"),
-                                   p("")),
+                                   p("This graph shows data on actual and reported cases of arson.",
+                                     textOutput("arson_case_data", inline = T))),
                           tabPanel("Damages", 
-                                   plotOutput("damage_plot"),
-                                   p(""))
+                                   plotlyOutput("damage_plot"),
+                                   p("This plot shows data about the monetary value of property",
+                                     "damage causes by arson",
+                                     strong(textOutput("arson_damage_data", inline = T), inline = T)))
                           )
            ))),
   tabPanel('Prominent Crimes',

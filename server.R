@@ -45,14 +45,51 @@ server <- function(input, output) {
     arson_data[[1]]
   })
   
-  output$damage_plot <- renderPlot({
+  output$peak_damage <- renderText({
+    arson_data <- national_arson_data()
+    arson_data <- arson_data %>% 
+      filter(est_damage_value == max(est_damage_value)) %>% 
+      select(est_damage_value)
+    paste0("$", arson_data[[1]])
+  })
+  
+  output$peak_damage_year <- renderText({
+    arson_data <- national_arson_data()
+    arson_data <- arson_data %>% 
+      filter(est_damage_value == max(est_damage_value)) %>% 
+      select(year)
+    arson_data[[1]]
+  })
+  
+  output$damage_plot <- renderPlotly({
     state <- state.abb[grep(input$state, state.name)]
     arson_data <- state_arson_data(state, input$years[1], input$years[2])
     
-    ggplot(data = arson_data) + 
+    plot <- ggplot(data = arson_data) + 
       geom_bar(mapping = aes(x = year, y = est_damage_value), stat = "identity", fill = "#85bb65") +
       labs(title = "Est. Property Damage", x = "Year", y = "Damage Value ($)") +
       theme_minimal()
+    
+    hide_legend(ggplotly(plot))
+  })
+  
+  output$arson_case_data <- renderText({
+    paste("Shown here is the data for the state of", input$state, "from", input$years[1], "to", 
+          input$years[2], ".")
+  })
+  
+  output$arson_damage_data <- renderText({
+    state <- state.abb[grep(input$state, state.name)]
+    arson_data <- state_arson_data(state, input$years[1], input$years[2])
+    
+    max_damage <- arson_data %>% 
+      filter(est_damage_value == max(est_damage_value))
+    
+    min_damage <- arson_data %>% 
+      filter(est_damage_value == min(est_damage_value))
+    
+    paste("Shown here is the data for the state of", input$state, "from", input$years[1], "to", 
+          input$years[2], ".")
   })
   
   output$state_name_t <- renderText({
