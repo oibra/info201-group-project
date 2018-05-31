@@ -7,7 +7,7 @@ source("national_crime_trends.R")
 type_possibilities_seattle <- c("Homicide", "Rape", "Robbery", "Assault", "Larceny-Theft", "Burglary",
                                 "Motor Vehicle Theft")
 
-ui <- navbarPage(theme = "index.css", 
+ui <- navbarPage(theme = "index2.css", 
                  a(href = "https://github.com/oibra/info201-group-project", 
                    "Info 201 AC Team Red"),
   tabPanel("Home",
@@ -66,14 +66,16 @@ ui <- navbarPage(theme = "index.css",
               
               tabsetPanel(type = "tabs",
                           tabPanel("Arson Cases", 
-                                   plotOutput("cases_plot"),
+                                   plotOutput("cases_plot", click = "arson_plot_click"),
                                    p("This graph shows data on actual and reported cases of arson.",
-                                     textOutput("arson_case_data", inline = T))),
+                                     textOutput("arson_case_data", inline = T)
+                                     )),
                           tabPanel("Damages", 
                                    plotlyOutput("damage_plot"),
                                    p("This plot shows data about the monetary value of property",
-                                     "damage causes by arson",
-                                     strong(textOutput("arson_damage_data", inline = T), inline = T)))
+                                     "damage causes by arson.",
+                                     textOutput("arson_damage_data", inline = T),
+                                     ""))
                           )
            ))),
   tabPanel('Prominent Crimes',

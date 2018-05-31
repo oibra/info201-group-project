@@ -24,7 +24,6 @@ server <- function(input, output) {
     }
     
     plot +
-      geom_point(mapping = aes(x = year, y = actual), shape = 18, size = 3, color = "gray") +
       labs(title = "Arson Cases", x = "Year", y = "Cases") +
       theme_minimal()
   })
@@ -74,8 +73,26 @@ server <- function(input, output) {
   })
   
   output$arson_case_data <- renderText({
-    paste("Shown here is the data for the state of", input$state, "from", input$years[1], "to", 
-          input$years[2], ".")
+    state <- state.abb[grep(input$state, state.name)]
+    arson_data <- state_arson_data(state, input$years[1], input$years[2])
+    
+    max_cases <- arson_data %>% 
+      filter(est_damage_value == max(est_damage_value))
+    
+    min_cases <- arson_data %>% 
+      filter(est_damage_value == min(est_damage_value))
+    
+    paste0("Shown here is the data for the state of ", input$state, " from ", input$years[1], " to ", 
+          input$years[2], ". The least arson cases in the state was ", 
+          min_cases$actual, " cases in the year ", min_cases$year, " while the most was ",
+          max_cases$actual, " cases in the year ", max_cases$year, ".")
+  })
+  
+  observeEvent(input$arson_plot_click, {
+    state <- state.abb[grep(input$state, state.name)]
+    arson_data <- state_arson_data(state, input$years[1], input$years[2])
+    
+    selected_year <- nearPoints(arson_data, input$arson_plot_click)
   })
   
   output$arson_damage_data <- renderText({
@@ -88,8 +105,10 @@ server <- function(input, output) {
     min_damage <- arson_data %>% 
       filter(est_damage_value == min(est_damage_value))
     
-    paste("Shown here is the data for the state of", input$state, "from", input$years[1], "to", 
-          input$years[2], ".")
+    paste0("Shown here is the data for the state of ", input$state, " from ", input$years[1], " to ", 
+          input$years[2], ". The least damage caused by arson in the state was $", 
+          min_damage$est_damage_value, " in the year ", min_damage$year, " while the most was $",
+          max_damage$est_damage_value, " in the year ", max_damage$year, ".")
   })
   
   output$state_name_t <- renderText({
