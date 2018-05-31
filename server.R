@@ -16,11 +16,11 @@ server <- function(input, output) {
     plot <- ggplot(data = arson_data)
     
     if ("reported" %in% input$choices) {
-      plot <- plot + geom_area(mapping = aes(x = year, y = reported), fill = "#ffb400")
+      plot <- plot + geom_area(mapping = aes(x = year, y = reported), fill = "#e17a57")
     }
 
     if ("confirmed" %in% input$choices) {
-      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "#ff0000", size = 1.5)
+      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "#c74b4b", size = 1.5)
     }
     
     plot +
@@ -86,6 +86,27 @@ server <- function(input, output) {
           input$years[2], ". The least arson cases in the state was ", 
           min_cases$actual, " cases in the year ", min_cases$year, " while the most was ",
           max_cases$actual, " cases in the year ", max_cases$year, ".")
+  })
+  
+  output$cases_details <- renderText({
+    state <- state.abb[grep(input$state, state.name)]
+    arson_data <- state_arson_data(state, input$years[1], input$years[2])
+    
+    points <- nearPoints(arson_data, input$arson_plot_click)
+    View(points)
+    
+    if (nrow(points) > 0) {
+      data <- paste("In", input$state, "in the year", points[[1,2]], ", there were",
+                    points[[1,7]], "cases of arson")
+      
+      if ("reported" %in% input$choices) {
+        data <- paste0(data, ", out of a total of ", points[[1,5]], " reported cases of arson.")
+      }
+    } else {
+      data <- ""
+    }
+    
+    data
   })
   
   observeEvent(input$arson_plot_click, {

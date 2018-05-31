@@ -31,7 +31,9 @@ ui <- navbarPage(theme = "index2.css",
              strong(textOutput("peak_damage", inline = T), inline = T),
              "in the year",
              strong(textOutput("peak_damage_year", inline = T), inline = T),
-             ".",
+             ". Last year, most of the west coast was on fire. Unfortunately, none of our data",
+             "covers that period of time. The more the climate changes, the easier it is for",
+             "fires to start and arson to become more damaging.",
              id = "arson-description"),
             
            
@@ -68,14 +70,13 @@ ui <- navbarPage(theme = "index2.css",
                           tabPanel("Arson Cases", 
                                    plotOutput("cases_plot", click = "arson_plot_click"),
                                    p("This graph shows data on actual and reported cases of arson.",
-                                     textOutput("arson_case_data", inline = T)
-                                     )),
+                                     textOutput("arson_case_data", inline = T),
+                                   p("", (textOutput("cases_details", inline = T))))),
                           tabPanel("Damages", 
                                    plotlyOutput("damage_plot"),
                                    p("This plot shows data about the monetary value of property",
                                      "damage causes by arson.",
-                                     textOutput("arson_damage_data", inline = T),
-                                     ""))
+                                     textOutput("arson_damage_data", inline = T)))
                           )
            ))),
   tabPanel('Prominent Crimes',
