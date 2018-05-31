@@ -16,11 +16,11 @@ server <- function(input, output) {
      #               fillcolor = "tomato")
     
     if ("reported" %in% input$choices) {
-      plot <- plot + geom_area(mapping = aes(x = year, y = reported), fill = "yellow")
+      plot <- plot + geom_area(mapping = aes(x = year, y = reported), fill = "#ffb400")
     }
 
     if ("confirmed" %in% input$choices) {
-      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "tomato", size = 1.5)
+      plot <- plot + geom_line(mapping = aes(x = year, y = actual), color = "#ff0000", size = 1.5)
     }
     
     plot +
