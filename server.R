@@ -6,6 +6,8 @@ library(ggplot2)
 source("national_crime_trends.R")
 source("analysis.R")
 
+seattle_data <- read.csv("data/Seattle_Crime_Stats_by_Police_Precinct_2008-Present.csv")
+
 server <- function(input, output) {
   output$cases_plot <- renderPlot({
     state <- state.abb[grep(input$state, state.name)]
@@ -149,6 +151,65 @@ server <- function(input, output) {
     plotly_plot <- hide_legend(ggplotly(plot2))
   })
 
+  filtered_plot <- reactive({
+    data <- filter(seattle_data, Year == input$radio_seattle) %>% 
+      group_by(CRIME_TYPE) %>% 
+      summarize(Count = sum(STAT_VALUE))
+    return (data)
+  })
+  
+  other_filtered_plot <- reactive({
+    seattle <- group_by(seattle_data, Year) %>% 
+      mutate(sum_total = sum(STAT_VALUE)) %>% 
+      filter(CRIME_TYPE == input$type_choice_seattle) %>% 
+      summarize(Count = sum(STAT_VALUE),
+                actual_plot = ((sum(STAT_VALUE) / sum_total[1]) * 100))
+    return(seattle)
+  })
+  
+  output$plot_seattle <- renderPlot({
+    if (input$radio_seattle != -100) {
+      g <- ggplot(data=filtered_plot(), aes(x=CRIME_TYPE, y=Count)) +
+        geom_bar(stat="identity", fill = "#FF6666") + 
+        labs(title = paste("Different amount of crime for the year", input$radio_seattle), 
+             y = "Count of Criminal Activity",
+             x = "Type of Criminal Event")
+    } else {
+      g <- ggplot(data = other_filtered_plot(), aes(x=Year, y=actual_plot)) + 
+        geom_line() + 
+        geom_smooth(method = "lm", se = FALSE, color = "blue", size = 3) +
+        labs(title = paste("Type of Crime throughout the Years"),
+             y = "Percentage of This Specific Crime to Total Crime (%)",
+             x = "Year")
+    }
+    g
+  })
+  
+  output$info_seattle <- renderDataTable({
+    if (input$radio_seattle != -100) {
+      frame <- nearPoints(filtered_plot(), input$plot_click_seattle, threshold = 10, maxpoints = 1,
+                          addDist = FALSE)
+      colnames(frame) <- c("Type of Criminal Event", "Count of Criminal Activity")
+      return (frame)
+    } else {
+      frame <- nearPoints(other_filtered_plot(), input$plot_click_seattle, threshold = 10, maxpoints = 1,
+                          addDist = FALSE)
+      colnames(frame) <- c("Year", "Count of Criminal Activity", "Ratio from Total Crime")
+      return (frame)
+    }
+  })
+  
+  output$message_seattle <- renderText({
+    data_name <- "null"
+    if (input$radio_seattle == -100) {
+      data_name <- "all years from 2008 to 2014."
+    } else {
+      data_name <- paste("the year ", input$radio_seattle, ".", sep="")
+    }
+    my_message <- paste("This is the data for", data_name)
+    return(my_message)
+  })
+  
 }
 
 shinyServer(server)

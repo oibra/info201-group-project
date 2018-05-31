@@ -4,6 +4,9 @@ library(plotly)
 source("analysis.R")
 source("national_crime_trends.R")
 
+type_possibilities_seattle <- c("Homicide", "Rape", "Robbery", "Assault", "Larceny-Theft", "Burglary",
+                                "Motor Vehicle Theft")
+
 ui <- navbarPage(theme = "index.css", 
                  a(href = "https://github.com/oibra/info201-group-project", 
                    "Info 201 AC Team Red"),
@@ -157,7 +160,29 @@ ui <- navbarPage(theme = "index.css",
            )
   ),
   tabPanel("Sabrina"),
-  tabPanel("Manu")
+  tabPanel("Seattle Crimes",
+           titlePanel("Seattle Based Crime Specifics"),
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("type_choice_seattle", label="Choose Type of Crime", type_possibilities_seattle),
+               radioButtons("radio_seattle", label="Choose Year Wanted", 
+                            choices = list("All" = -100, "2008" = 2008,
+                                           "2009" = 2009, "2010" = 2010,
+                                           "2011" = 2011, "2012" = 2012,
+                                           "2013" = 2013, "2014" = 2014),
+                            selected = -100)
+             ),
+             mainPanel(
+               p("The data below summarizes the specific type of crime that is occuring
+                 within Seattle itself. Please feel free to use the buttons on the side
+                 to get more specific data regarding this information. Also, this is an
+                 interactive graph, so you will be able to hover and take information from
+                 this graph itself."),
+               plotOutput('plot_seattle', click = "plot_click_seattle"),
+               dataTableOutput('info_seattle'),
+               p(textOutput('message_seattle'))
+               )
+             ))
 )
 
 shinyUI(ui)
