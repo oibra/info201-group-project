@@ -3,8 +3,9 @@ library(shiny)
 source("analysis.R")
 source("national_crime_trends.R")
 
-ui <- navbarPage(theme = "agency.css", 
-                 "Info 201 AC Team Red",
+ui <- navbarPage(theme = "index.css", 
+                 a(href = "https://github.com/oibra/info201-group-project", 
+                   "Info 201 AC Team Red"),
   tabPanel("Home",
            h1("National Crime Data"),
            p("Include some descriptions here")
