@@ -236,9 +236,35 @@ ui <- navbarPage(theme = "index.css",
              "While not all fires are arson, arson is a large contibutor.", 
              class = "arson-description")
            ),
+  
+  tabPanel("Seattle Crimes",
+           h2("Seattle Based Crime Specifics"),
+           h4("Page by Manu Sharma"),
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("type_choice_seattle", label="Choose Type of Crime", type_possibilities_seattle),
+               radioButtons("radio_seattle", label="Choose Year Wanted", 
+                            choices = list("All" = -100, "2008" = 2008,
+                                           "2009" = 2009, "2010" = 2010,
+                                           "2011" = 2011, "2012" = 2012,
+                                           "2013" = 2013, "2014" = 2014),
+                            selected = -100)
+             ),
+             mainPanel(
+               p("The data below summarizes the specific type of crime that is occuring
+                 within Seattle itself. Please feel free to use the buttons on the side
+                 to get more specific data regarding this information. Also, this is an
+                 interactive graph, so you will be able to hover and take information from
+                 this graph itself."),
+               plotOutput('plot_seattle', click = "plot_click_seattle"),
+               dataTableOutput('info_seattle'),
+               p(textOutput('message_seattle'))
+               )
+             )),
 
   tabPanel("Top Crimes",
            h2("Top Crime by Year"),
+           h4("Page by Sabrina Mohamed"),
 
            # Sidebar layout with input and output definitions ----
            sidebarLayout(
@@ -290,31 +316,8 @@ ui <- navbarPage(theme = "index.css",
 
 
              )
-           )),
-  tabPanel("Seattle Crimes",
-           h2("Seattle Based Crime Specifics"),
-           h4("Page by Manu Sharma"),
-           sidebarLayout(
-             sidebarPanel(
-               selectInput("type_choice_seattle", label="Choose Type of Crime", type_possibilities_seattle),
-               radioButtons("radio_seattle", label="Choose Year Wanted", 
-                            choices = list("All" = -100, "2008" = 2008,
-                                           "2009" = 2009, "2010" = 2010,
-                                           "2011" = 2011, "2012" = 2012,
-                                           "2013" = 2013, "2014" = 2014),
-                            selected = -100)
-             ),
-             mainPanel(
-               p("The data below summarizes the specific type of crime that is occuring
-                 within Seattle itself. Please feel free to use the buttons on the side
-                 to get more specific data regarding this information. Also, this is an
-                 interactive graph, so you will be able to hover and take information from
-                 this graph itself."),
-               plotOutput('plot_seattle', click = "plot_click_seattle"),
-               dataTableOutput('info_seattle'),
-               p(textOutput('message_seattle'))
-               )
-             ))
+           ))
+ 
 )
 
 shinyUI(ui)

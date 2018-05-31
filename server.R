@@ -305,6 +305,7 @@ server <- function(input, output) {
     return(my_message)
   })
   
+  #Sabrina
   getType <- reactive({
     data.type <-  switch (
       input$data,
@@ -351,13 +352,13 @@ server <- function(input, output) {
     paste("Minimum threshold of", input$data)
   })
 
-  output$table <- renderTable({
-    data.table()
-  })
-
-  output$plot <- renderPlot({
-    plot(GetPlot(data.table(), input$year, input$obs, input$data))
-  })
+  # output$table <- renderTable({
+  #   data.table()
+  # })
+  # 
+  # output$plot <- renderPlot({
+  #   plot(GetPlot(data.table(), input$year, input$obs, input$data))
+  # })
   
 }
 
