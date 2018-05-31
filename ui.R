@@ -11,7 +11,21 @@ ui <- navbarPage(theme = "index.css",
            ),
   tabPanel("Arson",
            h2("National Arson Data"),
+           p("Arson is the criminal act of deliberately setting a fire, and",
+             "is a large enough issue that the FBI keeps an entire publicly",
+             "accessible database on it, which is what we used to provide",
+             "this data. Our plots show data about reported number of cases", 
+             "of arson, actual cases of arson, and total amount of property",
+             "damage caused by arson from the years 1979 - 2016. The total",
+             "actual cases of arson peaked at",
+             strong(textOutput("peak_actual_cases", inline = T), inline = T),
+             "cases in the year",
+             strong(textOutput("peak_year", inline = T), inline = T), id = "arson-description"),
+           
+           br(),
+           
            sidebarLayout(
+             
             sidebarPanel(
               selectInput("state", "State: ", choices = states,
                            selected = "Washington"),
@@ -34,13 +48,14 @@ ui <- navbarPage(theme = "index.css",
             ),
              
             mainPanel(
+              
               tabsetPanel(type = "tabs",
                           tabPanel("Arson Cases", 
                                    plotOutput("cases_plot"),
-                                   p()),
+                                   p("")),
                           tabPanel("Damages", 
                                    plotOutput("damage_plot"),
-                                   p())
+                                   p(""))
                           )
            ))),
   tabPanel("Property Crime",
