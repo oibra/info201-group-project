@@ -14,8 +14,6 @@ server <- function(input, output) {
     arson_data <- state_arson_data(state, input$years[1], input$years[2])
     
     plot <- ggplot(data = arson_data)
-    #plot <- plot_ly(arson_data, x = ~year, y = ~actual, name = "Actual Cases", type = "scatter", mode = "none", fill = "tozery",
-     #               fillcolor = "tomato")
     
     if ("reported" %in% input$choices) {
       plot <- plot + geom_area(mapping = aes(x = year, y = reported), fill = "#ffb400")
@@ -29,6 +27,22 @@ server <- function(input, output) {
       geom_point(mapping = aes(x = year, y = actual), shape = 18, size = 3, color = "gray") +
       labs(title = "Arson Cases", x = "Year", y = "Cases") +
       theme_minimal()
+  })
+  
+  output$peak_actual_cases <- renderText({
+    arson_data <- national_arson_data()
+    arson_data <- arson_data %>% 
+      filter(actual == max(actual)) %>% 
+      select(actual)
+    arson_data[[1]]
+  })
+  
+  output$peak_year <- renderText({
+    arson_data <- national_arson_data()
+    arson_data <- arson_data %>% 
+      filter(actual == max(actual)) %>% 
+      select(year)
+    arson_data[[1]]
   })
   
   output$damage_plot <- renderPlot({

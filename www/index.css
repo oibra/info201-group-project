@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|IBM+Plex+Sans|Josefin+Sans|PT+Sans|Sunflower:300|Ubuntu');
+
+nav > .container-fluid {
+  background-color: black;
+}
+
+nav {
+  margin-bottom: 0px;
+}
+
+body {
+  background-color: rgba(110, 21, 30, 0.75)
+}
+
+.navbar-brand, h1, h2, h4, .navbar-header a, .navbar-header a:hover, .nav-tabs a {
+  font-family: 'Fjalla One';
+  color: #aaa;
+  text-decoration: none;
+}
+
+h1, h2, h4 {
+  text-decoration: underline;
+}
+
+h4 {
+  font-size: 14pt;
+}
+
+p {
+  color: #ddd;
+  font-size: 12pt;
+}
+
+.navbar-brand {
+  font-size: 22px;
+}
+
+.shiny-plot-output {
+  margin-bottom: 25px;
+
+}
+
+blockquote {
+  font-size: 14px;
+  margin-bottom: 11px;
+}
+
+strong {
+  color: #aaa;
+}
+
+#arson-description {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
