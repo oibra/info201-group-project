@@ -11,9 +11,39 @@ ui <- navbarPage(theme = "index2.css",
                  a(href = "https://github.com/oibra/info201-group-project", 
                    "Info 201 AC Team Red"),
   tabPanel("Home",
+           h4("Omar Ibrahim | Jeni Lane | Sabrina Mohamed | Manu Sharma", id = "authors"),
+           
            h1("National Crime Data"),
-           h4("Authors: Omar Ibrahim, Jenni Lane, Sabrina Mohamed, Manu Sharma"),
-           p()
+           
+           p("Our country is at a point where we are more aware of crime and our criminal",
+             "justice system then ever before. And with our heightened awareness and heightened",
+             "empathy, people are more interested in knowing what is going on in their country",
+             "than ever before. While it may seem that things are the worst they've ever been",
+             "it is important to remember that it only seems that way because we live in a time",
+             "where we are able to be more aware of what is happening than ever before. As",
+             "hopeless as it may seem at times, data across the board shows that that simply is",
+             "not true. Crime rates are at some of the lowest rates they've been in decades.",
+             "The data we've collected all shows the same thing; crime is at a relatively low",
+             "point, and as citizens we have to understand that data."),
+           
+           br(),
+           
+           p("We used three main data sources to create our presentation. The first is the FBI",
+             "Crime Data API, which has a plethora of data collected by the FBI on crime in the",
+             "US and stretches from 1979 to 2016. It isn't documented well, which makes it",
+             "difficult for new users to use, but the data provided is very extensive and lets",
+             "us see some extremely interesting crime statistics. We used the FBI Crime Data API",
+             "to analyze patterns in arson cases across the US and to analyze top crimes in each",
+             "state and over time."),
+           p("We also used a database from the Seattle Police to analyze the statistics of", 
+             "different types of crime in Seattle from 2008-2014. The third dataset we use was",
+             "a csv file on national crime data from 1995-2016."),
+           
+           br(),
+           
+           h2("Sources:"),
+           a(href = "https://crime-data-explorer.fr.cloud.gov/api#/", "FBI Crime Data API", 
+             class = "source")
            ),
   tabPanel("Arson",
            h2("National Arson Data"),
