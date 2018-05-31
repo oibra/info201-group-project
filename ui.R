@@ -310,8 +310,9 @@ ui <- navbarPage(theme = "index.css",
 
                # Output: Tabset w/ plot, summary, and table ----
                tabsetPanel(type = "tabs",
-                           tabPanel("Table", p(textOutput("table.info")), tableOutput("table")),
-                           tabPanel("Plot", p(textOutput("map.info")), plotOutput("plot", click = "plot_click"), p(textOutput("percentage")))
+                           tabPanel("Table", p(textOutput("table.info")), tableOutput("table"), p("404: Sorry, we can't find your table.")),
+                           tabPanel("Plot", p(textOutput("map.info")), plotOutput("plot", click = "plot_click"), p(textOutput("percentage"),
+                                    p("404: Sorry, we can't seem to find your plot")))
                )
 
 
