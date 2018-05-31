@@ -1,9 +1,6 @@
 library(httr)
 library(jsonlite)
 library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(shiny)
 library(maps)
 
 source("apiKeys.R")
