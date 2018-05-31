@@ -11,7 +11,7 @@ ui <- navbarPage(theme = "index.css",
                  a(href = "https://github.com/oibra/info201-group-project", 
                    "Info 201 AC Team Red"),
   tabPanel("Home",
-           h4("Omar Ibrahim | Jeni Lane | Sabrina Mohamed | Manu Sharma", id = "authors"),
+           h4("Omar Ibrahim | Jeni Lane | Sabrina Mohamed | Mrinal Sharma", id = "authors"),
            
            h1("National Crime Data"),
            
@@ -35,6 +35,7 @@ ui <- navbarPage(theme = "index.css",
              "us see some extremely interesting crime statistics. We used the FBI Crime Data API",
              "to analyze patterns in arson cases across the US and to analyze top crimes in each",
              "state and over time."),
+           
            p("We also used a database from the Seattle Police to analyze the statistics of", 
              "different types of crime in Seattle from 2008-2014. The third dataset we use was",
              "a csv file on national crime data from 1995-2016."),
@@ -45,95 +46,30 @@ ui <- navbarPage(theme = "index.css",
            a(href = "https://crime-data-explorer.fr.cloud.gov/api#/", "FBI Crime Data API", 
              class = "source")
            ),
-  tabPanel("Arson",
-           h2("National Arson Data"),
-           h4("Page by Omar Ibrahim"),
-           p("Arson is the criminal act of deliberately setting a fire, and",
-             "is a large enough issue that the FBI keeps an entire publicly",
-             "accessible database on it, which is what we used to provide",
-             "this data. Our plots show data about reported number of cases", 
-             "of arson, actual cases of arson, and total amount of property",
-             "damage caused by arson from the years 1979 - 2016. The total",
-             "actual cases of arson nationally peaked at",
-             strong(textOutput("peak_actual_cases", inline = T), inline = T),
-             "cases in the year",
-             strong(textOutput("peak_year", inline = T), inline = T), 
-             "while national property damage caused by arson peaked at ",
-             strong(textOutput("peak_damage", inline = T), inline = T),
-             "in the year",
-             strong(textOutput("peak_damage_year", inline = T), inline = T),
-             ". Last year, most of the west coast was on fire. Unfortunately, none of our data",
-             "covers that period of time. The more the climate changes, the easier it is for",
-             "fires to start and arson to become more damaging.",
-             id = "arson-description"),
-            
-           
-           br(),
-           
-           sidebarLayout(
-             
-            sidebarPanel(
-              selectInput("state", "State: ", choices = states,
-                           selected = "Washington"),
-               
-              br(),
-               
-              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016, sep = ""),
-              
-              br(),
-              
-              checkboxGroupInput("choices", "Plot: ", 
-                                 c("Reported Cases" = "reported", 
-                                   "Confirmed Cases" = "confirmed"),
-                                 selected = "confirmed"),
-              
-              hr(),
-               
-              p(em("Notes: ")),
-              p(em("Virginia has been removed as there is not adequet data on VA to create a",
-                   "visualization.")),
-              p(em("Plot selector is only for first graph."))
-            ),
-             
-            mainPanel(
-              
-              tabsetPanel(type = "tabs",
-                          tabPanel("Arson Cases", 
-                                   plotOutput("cases_plot", click = "arson_plot_click"),
-                                   p("This graph shows data on actual and reported cases of arson.",
-                                     textOutput("arson_case_data", inline = T),
-                                   p("", (textOutput("cases_details", inline = T))))),
-                          tabPanel("Damages", 
-                                   plotlyOutput("damage_plot"),
-                                   p("This plot shows data about the monetary value of property",
-                                     "damage causes by arson.",
-                                     textOutput("arson_damage_data", inline = T)))
-                          )
-           ))),
   tabPanel('Prominent Crimes',
            h2("Persistent Crimes in the US"),
            h4("Page by Jeni Lane"),
            sidebarLayout(
-            sidebarPanel(
-              h3("Controls for Graphs:"),
-              sliderInput("year", "Years", value = 2016, 
-                         min = 1995, max = 2016, sep = ""),
-              br(),
-              selectInput("select_crime", "Select a Crime:",
-                          c("Property Crime" = "property_crime",
-                            "Violent Crime" = "violent_crime",
-                            "Homicide" = "homicide",
-                            "Rape" = "rape_legacy",
-                            "Robbery" = "robbery",
-                            "Aggravated Assault" = "aggravated_assault",
-                            "Burglary" = "burglary",
-                            "Larceny" = "larceny",
-                            "Motor Vehicle Theft" = "motor_vehicle_theft")),
-              p(em("Note: This second selector is only for the second graph")),
-              br(),
-              tableOutput("prop_table")
-              ),
-          mainPanel(
+             sidebarPanel(
+               h3("Controls for Graphs:"),
+               sliderInput("year", "Years", value = 2016, 
+                           min = 1995, max = 2016, sep = ""),
+               br(),
+               selectInput("select_crime", "Select a Crime:",
+                           c("Property Crime" = "property_crime",
+                             "Violent Crime" = "violent_crime",
+                             "Homicide" = "homicide",
+                             "Rape" = "rape_legacy",
+                             "Robbery" = "robbery",
+                             "Aggravated Assault" = "aggravated_assault",
+                             "Burglary" = "burglary",
+                             "Larceny" = "larceny",
+                             "Motor Vehicle Theft" = "motor_vehicle_theft")),
+               p(em("Note: This second selector is only for the second graph")),
+               br(),
+               tableOutput("prop_table")
+             ),
+             mainPanel(
                p("In recent months, the media has been rampant with new crimes,",
                  "and blasting cries for change from the people of the United States.",
                  'Beginning back in 2013, when the "Black Lives Matter" movement started',
@@ -221,9 +157,88 @@ ui <- navbarPage(theme = "index.css",
              )
            )
   ),
+  
+  tabPanel("Arson",
+           h2("National Arson Data"),
+           h4("Page by Omar Ibrahim"),
+           p("Arson is the criminal act of deliberately setting a fire, and",
+             "is a large enough issue that the FBI keeps an entire publicly",
+             "accessible database on it, which is what we used to provide",
+             "this data. Our plots show data about reported number of cases", 
+             "of arson, actual cases of arson, and total amount of property",
+             "damage caused by arson from the years 1979 - 2016. The total",
+             "actual cases of arson nationally peaked at",
+             strong(textOutput("peak_actual_cases", inline = T), inline = T),
+             "cases in the year",
+             strong(textOutput("peak_year", inline = T), inline = T), 
+             "while national property damage caused by arson peaked at ",
+             strong(textOutput("peak_damage", inline = T), inline = T),
+             "in the year",
+             strong(textOutput("peak_damage_year", inline = T), inline = T),
+             ". Last year, most of the west coast was on fire. Unfortunately, none of our data",
+             "covers that period of time. The more the climate changes, the easier it is for",
+             "fires to start and arson to become more damaging.",
+             class = "arson-description"),
+            
+           
+           br(),
+           
+           sidebarLayout(
+             
+            sidebarPanel(
+              selectInput("state", "State: ", choices = states,
+                           selected = "Washington"),
+               
+              br(),
+               
+              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016, sep = ""),
+              
+              br(),
+              
+              checkboxGroupInput("choices", "Plot: ", 
+                                 c("Reported Cases" = "reported", 
+                                   "Confirmed Cases" = "confirmed"),
+                                 selected = "confirmed"),
+              
+              hr(),
+               
+              p(em("Notes: ")),
+              p(em("Virginia has been removed as there is not adequet data on VA to create a",
+                   "visualization.")),
+              p(em("Plot selector is only for first graph."))
+            ),
+             
+            mainPanel(
+              
+              tabsetPanel(type = "tabs",
+                          tabPanel("Arson Cases", 
+                                   plotOutput("cases_plot", click = "arson_plot_click"),
+                                   p("This graph shows data on actual and reported cases of arson.",
+                                     textOutput("arson_case_data", inline = T),
+                                   p("", (textOutput("cases_details", inline = T))))),
+                          tabPanel("Damages", 
+                                   plotlyOutput("damage_plot"),
+                                   p("This plot shows data about the monetary value of property",
+                                     "damage causes by arson.",
+                                     textOutput("arson_damage_data", inline = T)))
+                          )
+           )),
+           
+           br(),
+           
+           p("If you are witness to an act of arson, please alert the proper authorities as soon",
+             "as possible. Fires can grow out of control extremely quickly, and are both an",
+             "extreme danger to public health and to the environment. Close to 3300 people died in",
+             "fires in the US in 2015, and in the summer of 2017, California, Oregon, Wahington,",
+             "and British Columbia were all on fire. The sky was completely covered in smoke.",
+             "While not all fires are arson, arson is a large contibutor.", 
+             class = "arson-description")
+           ),
+  
   tabPanel("Sabrina"),
   tabPanel("Seattle Crimes",
-           titlePanel("Seattle Based Crime Specifics"),
+           h2("Seattle Based Crime Specifics"),
+           h4("Page by Manu Sharma"),
            sidebarLayout(
              sidebarPanel(
                selectInput("type_choice_seattle", label="Choose Type of Crime", type_possibilities_seattle),

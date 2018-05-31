@@ -93,7 +93,6 @@ server <- function(input, output) {
     arson_data <- state_arson_data(state, input$years[1], input$years[2])
     
     points <- nearPoints(arson_data, input$arson_plot_click)
-    View(points)
     
     if (nrow(points) > 0) {
       data <- paste("In", input$state, "in the year", points[[1,2]], ", there were",
