@@ -7,7 +7,7 @@ source("national_crime_trends.R")
 type_possibilities_seattle <- c("Homicide", "Rape", "Robbery", "Assault", "Larceny-Theft", "Burglary",
                                 "Motor Vehicle Theft")
 
-ui <- navbarPage(theme = "index2.css", 
+ui <- navbarPage(theme = "index.css", 
                  a(href = "https://github.com/oibra/info201-group-project", 
                    "Info 201 AC Team Red"),
   tabPanel("Home",
