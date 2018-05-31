@@ -2,10 +2,39 @@ library(shiny)
 library(plotly)
 
 source("analysis.R")
+source("national_crime_trends.R")
 
 ui <- navbarPage("Pages",
   tabPanel("Home"),
-  
+  tabPanel("Arson",
+           tags$h1("National Arson Data"),
+           sidebarLayout(
+            sidebarPanel(
+              selectInput("state", "State: ", choices = states,
+                           selected = "Washington"),
+               
+              br(),
+               
+              checkboxGroupInput("choices", "Plot: ", 
+                                  c("Reported Cases" = "reported", 
+                                    "Confirmed Cases" = "confirmed"),
+                                  selected = "confirmed"),
+               
+              br(),
+               
+              sliderInput("years", "Years", c(1979, 2016), min = 1979, max = 2016),
+              
+              tags$hr(),
+               
+              tags$blockquote("Note: Virginia has been removed as there is not adequet data on VA 
+                              to create a visualization.")
+            ),
+             
+            mainPanel(
+              tabsetPanel(type = "tabs",
+                          tabPanel("Arson Cases", plotlyOutput("cases_plot")),
+                          tabPanel("Damages", plotOutput("damage_plot")))
+           ))),
   tabPanel("Jeni",
            titlePanel("Persistent Crimes in America"),
            h4("Page by Jeni Lane"),
@@ -47,7 +76,7 @@ ui <- navbarPage("Pages",
                  "The following data, taken from the Crime Data Explorer of the",
                  "US government, seeks to look further at some of the greater crimes",
                  "the have also been prevalent in our legal system as of late."
-                 ),
+               ),
                br(),
                p("Despite the thousands of hate crimes, sexual offenses, and shootings,",
                  "that have been occuring recently in America, the most protrusive crime",
