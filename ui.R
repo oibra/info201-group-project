@@ -1,29 +1,35 @@
 library(shiny)
+library(plotly)
 
 source("analysis.R")
 
 ui <- navbarPage("Pages",
-  tabPanel("Omar",
-           sidebarLayout(
-             sidebarPanel(),
-             mainPanel()
-           )),
-
+  tabPanel("Home"),
+  
   tabPanel("Jeni",
+           titlePanel("Persistent Crimes in America"),
+           h4("Page by Jeni Lane"),
            sidebarLayout(
-             
-             sidebarPanel(
-               radioButtons("stats", "Evictions vs Other Rates (select one):",
-                            c("Poverty Rate" = "pov_rate",
-                              "Median Household Income" = "med_house_inc",
-                              "Renter Occupied Households" = "rent_occ_house",
-                              "Rent Burden" = "rent_burden")),
-               br(),
-               sliderInput("year", "Years", value = 21, 
-                           min = 1995, max = 2016, sep = "")
-             ),
-             mainPanel(
-               h4("What crime is 'trending' in the US today?"),
+            sidebarPanel(
+              h3("Controls for Graphs:"),
+              sliderInput("year", "Years", value = 2016, 
+                         min = 1995, max = 2016, sep = ""),
+              br(),
+              selectInput("select_crime", "Select a Crime:",
+                          c("Property Crime" = "property_crime",
+                            "Violent Crime" = "violent_crime",
+                            "Homicide" = "homicide",
+                            "Rape" = "rape_legacy",
+                            "Robbery" = "robbery",
+                            "Aggravated Assault" = "aggravated_assault",
+                            "Burglary" = "burglary",
+                            "Larceny" = "larceny",
+                            "Motor Vehicle Theft" = "motor_vehicle_theft")),
+              p(em("Note: This second selector is only for the second graph")),
+              br(),
+              tableOutput("prop_table")
+              ),
+          mainPanel(
                p("In recent months, the media has been rampant with new crimes,",
                  "and blasting cries for change from the people of the United States.",
                  'Beginning back in 2013, when the "Black Lives Matter" movement started',
@@ -48,7 +54,7 @@ ui <- navbarPage("Pages",
                  "as of late remains being",
                  strong("Property Crime."),
                  "Property Crime includes, as stated by the Uniform Crime Reporting Program,",
-                 '"offenses of burglary, larceny theft, motor vehicle theft, and arson.',
+                 '"offenses of burglary, larceny theft, motor vehicle theft, and arson."',
                  em("For more about the United States recent arson crimes, check out our 'Arson' tab at the top of this page."),
                  "Out of all the 51 US States (including District of Columbia),",
                  strong(textOutput("state_name_t", inline = T),inline = T),
@@ -73,12 +79,44 @@ ui <- navbarPage("Pages",
                  "property crime out of all total crimes for each state in 2016.",
                  "This change in percentage is due to the total amount of crimes",
                  "occuring in each state being less than California's crime total,",
-                 "leading to higher property crime percentage overall."
-                 ),
-                plotOutput("prop_plot")
-               )
-            )
-      ),
+                 "leading to higher property crime percentage.",
+                 "Overall, the average percentage of property crime is",
+                 strong(textOutput("mean_percent", inline = T), inline = T),
+                 "with the minimum percentage being",
+                 strong(textOutput("min_percent", inline = T), inline = T),
+                 "and the maximum percentage being",
+                 strong(textOutput("max_percent", inline = T), inline = T),
+                 "across the United States."
+               ),
+               br(),
+               p(
+                 "Below is an interactive plot of each states' population verus their total amount of property crimes.",
+                 "Using the slider, the year of data can be change from 1995 up to the most",
+                 "recent year of data (2016). The graph will load starting at 2016.",
+                 "If a dot (state) is clicked on, a table will appear at the bottom",
+                 "of the controls section of the screen",
+                 "with information about that state's property crime data.",
+                 "Some states overlap in positioning so several states may appear by",
+                 "accident in the table due to coordinate positioning.",
+                 "If a spot with no data is selected, the table will appear blank.",
+                 "Each state is listed by its abbreviation of its name in the table."
+               ),
+               plotOutput("prop_plot", click = "prop_click"),
+               br(),
+               br(),
+               p(
+                 "Additionally, we have also provided an interactive graph made by Plotly",
+                 "to show the plotting of different crimes compared with each states' population.",
+                 "By using the dropdown bar in the controls area, you can switch what type",
+                 "of crime is currently being used in the graph. You can also hover over",
+                 "any of the plots in the graph and a small textbox will appear with data",
+                 "about that point."
+               ),
+               plotlyOutput("all_crime_plot"),
+               br()
+             )
+           )
+  ),
   tabPanel("Sabrina"),
   tabPanel("Manu")
 )

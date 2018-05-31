@@ -12,6 +12,12 @@ crime_data <- read.csv("data/estimated_crimes.csv", stringsAsFactors = FALSE)
 summary_data <- filter(crime_data, state_abbr == "") %>% 
   select(-population, -state_abbr)
 
+states_only <- crime_data %>% 
+  filter(state_abbr != "")
+
+states_2016 <- states_only %>% 
+  filter(year == 2016)
+
 biggest_crime <- "property_crime"
 
 state_prop_crime_max <- crime_data %>% 
@@ -77,18 +83,20 @@ wash_percentage <- round(as.numeric(wa_property) / wa_total_crime * 100, 0)
 
 cali_wash_range <- wash_percentage - cal_percentage
 
-cali_vermont_range <- ver_percentage - cal_percentage
+cali_vermont_range <- vermont_percentage - cal_percentage
 
 #Mean percentage of property crime
+property_percents <- crime_data %>% 
+  filter(year == 2016 & state_abbr != "") %>% 
+  select(-year, -state_abbr, -population)
+    
+property_percents$total_crime <- rowSums(property_percents) 
 
+property_percents$prop_percent <- round(property_percents$property_crime / 
+                                          property_percents$total_crime * 100, 0)
 
+mean_percentage <- round(mean(property_percents$prop_percent), 0)
 
-#Graphs
-recent_year <- filter(crime_data, year == 2016)
+min_percentage <- min(property_percents$prop_percent)
 
-
-plot <- ggplot(data = recent_year) +
-  geom_point(aes(x = population, y = property_crime, color = state_abbr, size = 3),
-             show.legend = FALSE)
-
-plot
+max_percentage <- max(property_percents$prop_percent)
