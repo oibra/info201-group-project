@@ -43,10 +43,10 @@ ui <- navbarPage(theme = "index.css",
            br(),
            
            h2("Sources:"),
-           a(href = "https://crime-data-explorer.fr.cloud.gov/api#/", "FBI Crime Data API", 
-             class = "source"),
-           a(href = "https://data.seattle.gov/Public-Safety/Seattle-Crime-Stats-by-Police-Precinct-2008-Presen/3xqu-vnum",
-             "Seattle Crime Stats by Police Precinct 2008-Present", class = "source")
+           p(a(href = "https://crime-data-explorer.fr.cloud.gov/api#/", "FBI Crime Data API", 
+             class = "source")),
+           p(a(href = "https://data.seattle.gov/Public-Safety/Seattle-Crime-Stats-by-Police-Precinct-2008-Presen/3xqu-vnum",
+             "Seattle Crime Stats by Police Precinct 2008-Present", class = "source"))
            ),
   tabPanel('Prominent Crimes',
            h2("Persistent Crimes in the US"),
